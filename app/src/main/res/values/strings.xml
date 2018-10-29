@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">IChat</string>
+    <string name="text_hello_world">Hello World!</string>
+</resources>
