@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guide_line_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guide_line_right"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guild_line_top"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_text_user_name"
+        style="@style/EditTextCustom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/login_email_hint"
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@+id/guide_line_right"
+        app:layout_constraintStart_toEndOf="@+id/guide_line_left"
+        app:layout_constraintTop_toBottomOf="@+id/guild_line_top" />
+
+    <EditText
+        android:id="@+id/edit_text_password"
+        style="@style/EditTextCustom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:hint="@string/login_password_hint"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@+id/guide_line_right"
+        app:layout_constraintStart_toStartOf="@+id/guide_line_left"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_user_name" />
+
+    <Button
+        android:id="@+id/button_login_account"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:background="@color/color_medium_blue"
+        android:text="@string/login_button_login_title"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toStartOf="@+id/guide_line_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guide_line_left"
+        app:layout_constraintTop_toBottomOf="@+id/check_box_remember_user" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_2dp"
+        android:text="@string/login_text_view_show"
+        android:textSize="@dimen/dimen_18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guide_line_right"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guide_line_left"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_show_error" />
+
+    <EditText
+        android:id="@+id/edit_text_left"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_1dp"
+        android:layout_marginTop="@dimen/dimen_40dp"
+        android:layout_marginEnd="@dimen/dimen_8dp"
+        android:background="@color/color_medium_blue"
+        app:layout_constraintEnd_toStartOf="@+id/text_view"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/button_login_account"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_sign_up"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/edit_text_right"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_1dp"
+        android:layout_marginStart="@dimen/dimen_8dp"
+        android:layout_marginTop="@dimen/dimen_40dp"
+        android:background="@color/color_medium_blue"
+        app:layout_constraintEnd_toStartOf="@+id/guide_line_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/text_view"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_sign_up" />
+
+    <com.google.android.gms.common.internal.SignInButtonImpl
+        android:id="@+id/button_login_google"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_24dp"
+        android:background="@color/color_fresh_red"
+        android:drawableStart="@mipmap/ic_google"
+        android:text="@string/login_button_login_google_title"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toStartOf="@+id/guide_line_right"
+        app:layout_constraintStart_toEndOf="@+id/guide_line_left"
+        app:layout_constraintTop_toBottomOf="@+id/text_view" />
+
+    <CheckBox
+        android:id="@+id/check_box_remember_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:text="@string/login_check_box_title"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guide_line_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guide_line_left"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_password" />
+
+    <TextView
+        android:id="@+id/text_view_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:text="@string/login_text_view_register_title"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guide_line_right"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="@+id/guide_line_left"
+        app:layout_constraintTop_toBottomOf="@+id/button_login_account" />
+
+    <TextView
+        android:id="@+id/text_view_show_error"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guide_line_right"
+        app:layout_constraintStart_toEndOf="@+id/guide_line_left"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_sign_up"
+        android:textColor="@color/color_fresh_red"
+        android:gravity="center"/>
+</android.support.constraint.ConstraintLayout>

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">IChat</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button_login_title">Login</string>
+    <string name="login_text_view_show">OR</string>
+    <string name="login_button_login_google_title">Login with Google</string>
+    <string name="error_not_empty">This field can not empty</string>
+    <string name="login_check_box_title">Remember me</string>
+    <string name="login_text_view_register_title">New account ? Register</string>
 </resources>
