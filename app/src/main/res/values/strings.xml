@@ -8,4 +8,8 @@
     <string name="error_not_empty">This field can not empty</string>
     <string name="login_check_box_title">Remember me</string>
     <string name="login_text_view_register_title">New account ? Register</string>
+    <string name="registration_name_hint">Name</string>
+    <string name="action_sign_up">sign up</string>
+    <string name="progress_loading">Loading...</string>
+    <string name="error_required">Required.</string>
 </resources>
