@@ -47,6 +47,7 @@ public class SingUpPresenter implements SignUpContract.Presenter, OnCompleteList
             valid = false;
         }
         return valid;
+
     }
 
     @Override

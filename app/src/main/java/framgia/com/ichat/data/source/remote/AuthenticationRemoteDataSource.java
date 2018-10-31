@@ -27,4 +27,13 @@ public class AuthenticationRemoteDataSource implements AuthenticationDataSource.
         return mAuth.getCurrentUser();
     }
 
+    @Override
+    public void getLoginAccountStatus(String email, String password,
+                                      OnCompleteListener onCompleteListener,
+                                      OnFailureListener onFailureListener) {
+        mAuth.signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
 }

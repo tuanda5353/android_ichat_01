@@ -1,9 +1,11 @@
-package framgia.com.ichat;
+package framgia.com.ichat.screen.home;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import framgia.com.ichat.R;
+
+public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
