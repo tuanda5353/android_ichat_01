@@ -20,6 +20,7 @@ import framgia.com.ichat.data.repository.AuthenticationRepository;
 import framgia.com.ichat.data.source.local.AuthenticationLocalDataSource;
 import framgia.com.ichat.data.source.remote.AuthenticationRemoteDataSource;
 import framgia.com.ichat.screen.home.HomeActivity;
+import framgia.com.ichat.screen.signup.SignUpActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View,
         View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -85,6 +86,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     @Override
+    public void navigateLogin() {
+        startActivity(new Intent(this, SignUpActivity.class));
+        finish();
+    }
+
+    @Override
     public void saveInformation() {
         mPresenter.saveUserInformation(getText(mEditTextEmail), getText(mEditTextPassword));
     }
@@ -98,9 +105,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             case R.id.button_login_google:
                 break;
             case R.id.text_view_sign_up:
+                navigateLogin();
                 break;
         }
-
     }
 
     @Override
@@ -117,7 +124,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         findViewById(R.id.button_login_account).setOnClickListener(this);
         findViewById(R.id.button_login_google).setOnClickListener(this);
+        findViewById(R.id.text_view_sign_up).setOnClickListener(this);
         mCheckBoxRemember.setOnCheckedChangeListener(this);
+
     }
 
     private void initVariable() {

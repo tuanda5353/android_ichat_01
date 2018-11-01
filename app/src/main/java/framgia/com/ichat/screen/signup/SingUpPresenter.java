@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import framgia.com.ichat.data.repository.AuthenticationRepository;
+import framgia.com.ichat.screen.home.HomeActivity;
 
 public class SingUpPresenter implements SignUpContract.Presenter, OnCompleteListener, OnFailureListener {
     private SignUpContract.View mView;
@@ -58,9 +59,13 @@ public class SingUpPresenter implements SignUpContract.Presenter, OnCompleteList
     @Override
     public void onComplete(@NonNull Task task) {
         mView.hideProgressDialog();
-        if (task.isSuccessful()) {
-            mRepository.getCurrentUser();
+        if (!task.isSuccessful()) {
+            mView.onCreateAccountFailed();
+            return;
         }
+        mView.onCreateAccountSuccess();
+        mRepository.getCurrentUser();
+        mView.changeActivity(HomeActivity.class);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package framgia.com.ichat.screen.signup;
 
 import com.google.firebase.auth.FirebaseUser;
+
 import framgia.com.ichat.screen.base.BasePresenter;
 
 public class SignUpContract {
@@ -20,6 +21,12 @@ public class SignUpContract {
         void requestFocusEmail();
 
         void requestFocusPassword();
+
+        void changeActivity(Class activity);
+
+        void onCreateAccountSuccess();
+
+        void onCreateAccountFailed();
 
         void showToastShort(String message);
     }

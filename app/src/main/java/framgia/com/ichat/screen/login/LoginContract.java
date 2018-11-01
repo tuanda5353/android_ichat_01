@@ -20,6 +20,8 @@ public interface LoginContract {
 
         void navigateHome();
 
+        void navigateLogin();
+
         void saveInformation();
     }
 

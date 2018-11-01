@@ -1,6 +1,8 @@
 package framgia.com.ichat.screen.base;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -22,6 +24,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResource());
         initComponents();
         initData(savedInstanceState);
+    }
+
+    public void changeActivity(Class activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
     }
 
     public void showProgressDialog() {
