@@ -3,6 +3,7 @@ package framgia.com.ichat.screen.signup;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -68,6 +69,16 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
     @Override
     public void requestFocusPassword() {
         mEditPassword.requestFocus();
+    }
+
+    @Override
+    public void onCreateAccountSuccess() {
+        Toast.makeText(this, R.string.msg_create_account_success, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCreateAccountFailed() {
+        Toast.makeText(this, R.string.msg_create_account_failed, Toast.LENGTH_SHORT).show();
     }
 
     @Override

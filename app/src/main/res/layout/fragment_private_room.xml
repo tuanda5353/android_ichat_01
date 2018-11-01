@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_online_room"
+        android:id="@+id/fab_private_room"
         style="@style/FloatingActionButtomRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
