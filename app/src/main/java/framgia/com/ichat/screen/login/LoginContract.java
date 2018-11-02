@@ -1,5 +1,11 @@
 package framgia.com.ichat.screen.login;
 
+import android.content.Intent;
+
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+
 import framgia.com.ichat.data.model.User;
 
 public interface LoginContract {
@@ -14,13 +20,15 @@ public interface LoginContract {
 
         void onLoginError();
 
+        void onSystemError();
+
         void updateUi(String email, String password);
 
         void updateCheckbox();
 
         void navigateHome();
 
-        void navigateLogin();
+        void navigateSignUp();
 
         void saveInformation();
     }
@@ -43,5 +51,9 @@ public interface LoginContract {
         boolean getRememberStatus();
 
         void setIsRemember(boolean isRemember);
+
+        void getSignedInAccount(int requestCode, Intent data);
+
+        void handleSignInWithGoogle(Task<GoogleSignInAccount> task);
     }
 }

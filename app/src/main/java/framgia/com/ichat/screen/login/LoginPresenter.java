@@ -1,8 +1,11 @@
 package framgia.com.ichat.screen.login;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +22,7 @@ public class LoginPresenter implements LoginContract.Presenter, OnCompleteListen
     public LoginPresenter(LoginContract.View view, AuthenticationRepository repository) {
         this.mLoginView = view;
         this.mRepository = repository;
+        mIsRemember = mRepository.getRememberStatus();
     }
 
     @Override
@@ -75,7 +79,7 @@ public class LoginPresenter implements LoginContract.Presenter, OnCompleteListen
 
     @Override
     public void getInformationRemember(User user) {
-        mLoginView.updateUi(user.getmEmail(), user.getmPassword());
+        mLoginView.updateUi(user.getEmail(), user.getPassword());
     }
 
     @Override
@@ -89,22 +93,46 @@ public class LoginPresenter implements LoginContract.Presenter, OnCompleteListen
     }
 
     @Override
+    public void getSignedInAccount(int requestCode, Intent data) {
+        if (requestCode == LoginKey.RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInWithGoogle(task);
+        }
+    }
+
+    @Override
+    public void handleSignInWithGoogle(Task<GoogleSignInAccount> task) {
+        try {
+            mRepository.signInWithGoogle(task.getResult(ApiException.class), this, this);
+        } catch (ApiException e) {
+            mLoginView.onSystemError();
+        }
+    }
+
+    @Override
     public void onComplete(@NonNull Task task) {
         mLoginView.hideProgress();
         if (!task.isSuccessful()) {
             return;
         }
-        if (mIsRemember) {
-            mLoginView.saveInformation();
-            mRepository.changeRememberStatus(mIsRemember);
-        } else {
-            mRepository.changeRememberStatus(mIsRemember);
-        }
+        loginSuccess();
         mLoginView.navigateHome();
     }
 
     @Override
     public void onFailure(@NonNull Exception e) {
         mLoginView.onLoginError();
+    }
+
+    private void loginSuccess() {
+        if (mIsRemember) {
+            mLoginView.saveInformation();
+        }
+        mRepository.changeRememberStatus(mIsRemember);
+        updateUser();
+    }
+
+    private void updateUser() {
+        mRepository.updateUser(mRepository.getCurrentUser());
     }
 }
