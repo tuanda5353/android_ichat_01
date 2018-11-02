@@ -16,11 +16,12 @@
     <string name="display_name_user">Display name user</string>
     <string name="description_image_avatar">avatar</string>
     <string name="login_failed">Login failed. Please check your email and password</string>
-    <string name="message_loading_data">Loading ...</string>
     <string name="title_home">HOME</string>
     <string name="title_search">Search</string>
     <string name="msg_create_account_success">Create account success !</string>
     <string name="msg_create_account_failed">Create account failed !</string>
+    <string name="server_client_id">795947311906-h8hk8e7961568uq6gfbdnup54k702icp.apps.googleusercontent.com</string>
+    <string name="login_error_system">The system is busy. Please come back later !</string>
     <string-array name="title_tab_home">
         <item>Private</item>
         <item>Online</item>

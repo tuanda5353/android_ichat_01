@@ -12,8 +12,14 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import framgia.com.ichat.R;
 import framgia.com.ichat.data.repository.AuthenticationRepository;
@@ -41,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void showProgress() {
-        mProgressLogin.setMessage(getString(R.string.message_loading_data));
+        mProgressLogin.setMessage(getString(R.string.progress_loading));
         mProgressLogin.setCanceledOnTouchOutside(false);
         mProgressLogin.show();
     }
@@ -68,6 +74,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     @Override
+    public void onSystemError() {
+        Toast.makeText(getApplicationContext(), R.string.login_error_system, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void updateUi(String email, String password) {
         mEditTextEmail.setText(email);
         mEditTextPassword.setText(password);
@@ -86,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     @Override
-    public void navigateLogin() {
+    public void navigateSignUp() {
         startActivity(new Intent(this, SignUpActivity.class));
         finish();
     }
@@ -103,9 +114,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                 mPresenter.login(getText(mEditTextEmail), getText(mEditTextPassword));
                 break;
             case R.id.button_login_google:
+                showProgress();
+                loginWithGoogle();
                 break;
             case R.id.text_view_sign_up:
-                navigateLogin();
+                navigateSignUp();
                 break;
         }
     }
@@ -113,6 +126,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         mPresenter.setIsRemember(isChecked);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mPresenter.getSignedInAccount(requestCode, data);
     }
 
     private void initViews() {
@@ -126,18 +145,28 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         findViewById(R.id.button_login_google).setOnClickListener(this);
         findViewById(R.id.text_view_sign_up).setOnClickListener(this);
         mCheckBoxRemember.setOnCheckedChangeListener(this);
-
     }
 
     private void initVariable() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         AuthenticationRepository repository = new AuthenticationRepository(
-                new AuthenticationRemoteDataSource(FirebaseAuth.getInstance()),
+                new AuthenticationRemoteDataSource(FirebaseAuth.getInstance(),
+                        FirebaseDatabase.getInstance()),
                 new AuthenticationLocalDataSource(sharedPreferences));
         mPresenter = new LoginPresenter(this, repository);
     }
 
     private String getText(EditText editText) {
         return editText.getText().toString();
+    }
+
+    public void loginWithGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestEmail()
+                .build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, LoginKey.RC_SIGN_IN);
     }
 }

@@ -15,18 +15,20 @@ public class AuthenticationLocalDataSource implements AuthenticationDataSource.L
     }
 
     @Override
-    public void saveUserInformation( String email, String password) {
+    public void saveUserInformation(String email, String password) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(LoginKey.FRE_EMAIL, email);
         editor.putString(LoginKey.FRE_PASSWORD, password);
         editor.apply();
     }
+
     @Override
     public void getUserInformation(CallBack<User> callBack) {
         callBack.onLoginSuccess(getUser());
     }
+
     @Override
-    public void changeRememberStatus(boolean isRemember){
+    public void changeRememberStatus(boolean isRemember) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putBoolean(LoginKey.FRE_IS_REMEMBER, isRemember);
         editor.apply();

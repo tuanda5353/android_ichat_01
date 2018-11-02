@@ -1,8 +1,11 @@
 package framgia.com.ichat.data.repository;
 
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 
 import framgia.com.ichat.data.model.User;
@@ -39,6 +42,18 @@ public class AuthenticationRepository implements AuthenticationDataSource.Remote
                                       OnCompleteListener onCompleteListener,
                                       OnFailureListener onFailureListener) {
         mRemote.getLoginAccountStatus(email, password, onCompleteListener, onFailureListener);
+    }
+
+    @Override
+    public void signInWithGoogle(GoogleSignInAccount account,
+                                 OnCompleteListener onCompleteListener,
+                                 OnFailureListener onFailureListener) throws ApiException {
+        mRemote.signInWithGoogle(account, onCompleteListener, onFailureListener);
+    }
+
+    @Override
+    public void updateUser(FirebaseUser user) {
+        mRemote.updateUser(user);
     }
 
     @Override

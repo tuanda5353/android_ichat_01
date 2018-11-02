@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import framgia.com.ichat.R;
 import framgia.com.ichat.data.repository.AuthenticationRepository;
@@ -33,7 +34,9 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        AuthenticationRepository repository = new AuthenticationRepository(new AuthenticationRemoteDataSource(FirebaseAuth.getInstance()));
+        AuthenticationRepository repository = new AuthenticationRepository(
+                new AuthenticationRemoteDataSource(FirebaseAuth.getInstance(),
+                        FirebaseDatabase.getInstance()));
         mPresenter = new SingUpPresenter(repository);
         mPresenter.setView(this);
     }
