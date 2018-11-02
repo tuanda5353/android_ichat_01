@@ -63,8 +63,9 @@ public class SingUpPresenter implements SignUpContract.Presenter, OnCompleteList
             mView.onCreateAccountFailed();
             return;
         }
+        FirebaseUser user = mRepository.getCurrentUser();
+        mRepository.saveUserToDatabase(user);
         mView.onCreateAccountSuccess();
-        mRepository.getCurrentUser();
         mView.changeActivity(HomeActivity.class);
     }
 
