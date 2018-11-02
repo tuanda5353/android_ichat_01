@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import framgia.com.ichat.screen.privateroom.PrivateRoomFragment;
 import framgia.com.ichat.screen.publicroom.PublicRoomFragment;
-import framgia.com.ichat.screen.useronline.UserOnlineFragment;
+import framgia.com.ichat.screen.onlineuser.OnlineUserFragment;
 
 public class HomePagerAdapter extends FragmentPagerAdapter {
     private static final int PRIVATE_ROOM_FRAGMENT = 0;
@@ -25,7 +25,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
             case PRIVATE_ROOM_FRAGMENT:
                 return PrivateRoomFragment.newInstance();
             case USER_ONLINE_ROOM:
-                return UserOnlineFragment.newInstance();
+                return OnlineUserFragment.newInstance();
             default:
                 return PublicRoomFragment.newInstance();
         }

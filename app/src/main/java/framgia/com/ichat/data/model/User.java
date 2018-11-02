@@ -27,6 +27,18 @@ public class User {
         mPassword = password;
     }
 
+    public User() {
+    }
+
+    public User(FirebaseUser user, boolean isOnline) {
+        mUid = user.getUid();
+        mEmail = user.getEmail();
+        mDisplayName = user.getDisplayName();
+        mPhotoUrl = String.valueOf(user.getPhotoUrl());
+        mLastSignIn = user.getMetadata().getLastSignInTimestamp();
+        mIsOnline = isOnline;
+    }
+
     public String getUid() {
         return mUid;
     }
@@ -45,6 +57,10 @@ public class User {
 
     public String getPassword() {
         return mPassword;
+    }
+
+    public void setPassword(String password) {
+        mPassword = password;
     }
 
     public String getDisplayName() {
@@ -78,7 +94,6 @@ public class User {
     public void setOnline(boolean online) {
         mIsOnline = online;
     }
-
     public class UserKey {
         public static final String USER_REFERENCE = "user";
     }

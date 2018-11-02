@@ -52,8 +52,13 @@ public class AuthenticationRepository implements AuthenticationDataSource.Remote
     }
 
     @Override
-    public void updateUser(FirebaseUser user) {
-        mRemote.updateUser(user);
+    public void saveUserToDatabase(FirebaseUser firebaseUser) {
+        mRemote.saveUserToDatabase(firebaseUser);
+    }
+
+    @Override
+    public User getInformationOfUser(FirebaseUser user) {
+        return mRemote.getInformationOfUser(user);
     }
 
     @Override
