@@ -1,6 +1,7 @@
 package framgia.com.ichat.screen.signup;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -39,6 +40,9 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
                         FirebaseDatabase.getInstance()));
         mPresenter = new SingUpPresenter(repository);
         mPresenter.setView(this);
+        FirebaseAuth.getInstance()
+                .signOut();
+//        Log.d("12312312313132", "initData: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     @Override
@@ -53,6 +57,12 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
     }
 
     @Override
+    public void onNameEmpty() {
+        mEditName.setError(getString(R.string.error_required));
+        mEditName.requestFocus();
+    }
+
+    @Override
     public void onEmailEmpty() {
         mEditEmail.setError(getString(R.string.error_required));
         mEditEmail.requestFocus();
@@ -62,6 +72,11 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
     public void onPasswordEmpty() {
         mEditPassword.setError(getString(R.string.error_required));
         mEditPassword.requestFocus();
+    }
+
+    @Override
+    public void requestFocusName() {
+        mEditName.requestFocus();
     }
 
     @Override
@@ -91,7 +106,7 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
                 String name = mEditName.getText().toString();
                 String email = mEditEmail.getText().toString();
                 String password = mEditPassword.getText().toString();
-                mPresenter.createAccount(email, password);
+                mPresenter.createAccount(name, email, password);
                 break;
         }
     }

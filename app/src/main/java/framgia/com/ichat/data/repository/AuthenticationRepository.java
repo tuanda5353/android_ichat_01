@@ -26,10 +26,10 @@ public class AuthenticationRepository implements AuthenticationDataSource.Remote
     }
 
     @Override
-    public void createAccount(String email, String password,
+    public void createAccount(String name, String email, String password,
                               OnCompleteListener onCompleteListener,
                               OnFailureListener onFailureListener) {
-        mRemote.createAccount(email, password, onCompleteListener, onFailureListener);
+        mRemote.createAccount(name, email, password, onCompleteListener, onFailureListener);
     }
 
     @Override
@@ -59,6 +59,11 @@ public class AuthenticationRepository implements AuthenticationDataSource.Remote
     @Override
     public User getInformationOfUser(FirebaseUser user) {
         return mRemote.getInformationOfUser(user);
+    }
+
+    @Override
+    public void setInformationOfUser(FirebaseUser user) {
+        mRemote.setInformationOfUser(user);
     }
 
     @Override
