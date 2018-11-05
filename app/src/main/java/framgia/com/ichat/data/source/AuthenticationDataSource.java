@@ -10,7 +10,7 @@ import framgia.com.ichat.data.model.User;
 
 public interface AuthenticationDataSource {
     interface Remote {
-        void createAccount(String email, String password,
+        void createAccount(String name, String email, String password,
                            OnCompleteListener onCompleteListener,
                            OnFailureListener onFailureListener);
 
@@ -27,6 +27,9 @@ public interface AuthenticationDataSource {
         void saveUserToDatabase(FirebaseUser firebaseUser);
 
         User getInformationOfUser(FirebaseUser user);
+        void setInformationOfUser(FirebaseUser user,
+                                  OnCompleteListener onCompleteListener,
+                                  OnFailureListener onFailureListener);
     }
 
     interface Local {

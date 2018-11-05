@@ -1,29 +1,37 @@
 package framgia.com.ichat.data.source.remote;
 
+import android.net.Uri;
+import android.support.annotation.NonNull;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
 import framgia.com.ichat.data.model.User;
 import framgia.com.ichat.data.source.AuthenticationDataSource;
+import framgia.com.ichat.utils.Constants;
 
 public class AuthenticationRemoteDataSource implements AuthenticationDataSource.Remote {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
+    private String mName;
 
     public AuthenticationRemoteDataSource(FirebaseAuth auth, FirebaseDatabase firebaseDatabase) {
         mAuth = auth;
         mDatabase = firebaseDatabase;
     }
 
-    public void createAccount(String email, String password,
+    public void createAccount(String name, String email, String password,
                               OnCompleteListener onCompleteListener,
                               OnFailureListener onFailureListener) {
+        mName = name;
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(onCompleteListener)
                 .addOnFailureListener(onFailureListener);
@@ -71,5 +79,19 @@ public class AuthenticationRemoteDataSource implements AuthenticationDataSource.
     @Override
     public User getInformationOfUser(FirebaseUser firebaseUser) {
         return new User(firebaseUser, true);
+    }
+
+    @Override
+    public void setInformationOfUser(FirebaseUser user,
+                                     OnCompleteListener onCompleteListener,
+                                     OnFailureListener onFailureListener) {
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(mName)
+                .setPhotoUri(Uri.parse(Constants.UserProfile.DEFAULT_PROFILE_URL))
+                .build();
+        mAuth.getCurrentUser().updateProfile(profileUpdates)
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(onFailureListener);
+
     }
 }

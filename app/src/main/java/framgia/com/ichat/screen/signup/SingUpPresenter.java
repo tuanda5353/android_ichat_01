@@ -23,12 +23,12 @@ public class SingUpPresenter implements SignUpContract.Presenter, OnCompleteList
     }
 
     @Override
-    public void createAccount(String email, String password) {
-        if (!isValidate(email, password)) {
+    public void createAccount(String name, String email, String password) {
+        if (!isValidate(name, email, password)) {
             return;
         }
         mView.showProgressDialog();
-        mRepository.createAccount(email, password, this, this);
+        mRepository.createAccount(name, email, password, this, this);
     }
 
     @Override
@@ -37,8 +37,12 @@ public class SingUpPresenter implements SignUpContract.Presenter, OnCompleteList
     }
 
     @Override
-    public boolean isValidate(String email, String password) {
+    public boolean isValidate(String name, String email, String password) {
         boolean valid = true;
+        if (TextUtils.isEmpty(name)) {
+            mView.onNameEmpty();
+            valid = false;
+        }
         if (TextUtils.isEmpty(email)) {
             mView.onEmailEmpty();
             valid = false;
@@ -48,7 +52,6 @@ public class SingUpPresenter implements SignUpContract.Presenter, OnCompleteList
             valid = false;
         }
         return valid;
-
     }
 
     @Override
@@ -64,7 +67,21 @@ public class SingUpPresenter implements SignUpContract.Presenter, OnCompleteList
             return;
         }
         FirebaseUser user = mRepository.getCurrentUser();
-        mRepository.saveUserToDatabase(user);
+        mRepository.setInformationOfUser(user, new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (!task.isSuccessful()) {
+                    mView.onCreateAccountFailed();
+                    return;
+                }
+                mRepository.saveUserToDatabase(mRepository.getCurrentUser());
+            }
+        }, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                mView.onSetInformationFailed();
+            }
+        });
         mView.onCreateAccountSuccess();
         mView.changeActivity(HomeActivity.class);
     }
@@ -84,6 +101,8 @@ public class SingUpPresenter implements SignUpContract.Presenter, OnCompleteList
         if (e instanceof FirebaseAuthUserCollisionException) {
             mView.showErrorEmail(e.getMessage());
             mView.requestFocusEmail();
+            return;
         }
+        mView.showToastShort(e.getMessage());
     }
 }

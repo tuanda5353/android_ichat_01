@@ -53,6 +53,12 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
     }
 
     @Override
+    public void onNameEmpty() {
+        mEditName.setError(getString(R.string.error_required));
+        mEditName.requestFocus();
+    }
+
+    @Override
     public void onEmailEmpty() {
         mEditEmail.setError(getString(R.string.error_required));
         mEditEmail.requestFocus();
@@ -85,13 +91,18 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
     }
 
     @Override
+    public void onSetInformationFailed() {
+        Toast.makeText(this, R.string.msg_set_information_failed, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_sign_up:
                 String name = mEditName.getText().toString();
                 String email = mEditEmail.getText().toString();
                 String password = mEditPassword.getText().toString();
-                mPresenter.createAccount(email, password);
+                mPresenter.createAccount(name, email, password);
                 break;
         }
     }
