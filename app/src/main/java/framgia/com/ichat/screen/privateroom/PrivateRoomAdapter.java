@@ -51,7 +51,7 @@ public class PrivateRoomAdapter extends RecyclerView.Adapter<PrivateRoomAdapter.
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageAvatar;
         public TextView mTextName;
         public TextView mTextLastMessageOfUser;
@@ -65,7 +65,7 @@ public class PrivateRoomAdapter extends RecyclerView.Adapter<PrivateRoomAdapter.
 
         public void bindView(Context context, PrivateRoom privateRoom) {
             mTextName.setText(privateRoom.getName());
-            GlideApp.with(mContext).load(privateRoom.getImage()).into(mImageAvatar);
+            GlideApp.with(context).load(privateRoom.getImage()).circleCrop().into(mImageAvatar);
             List<Message> messages = new ArrayList<>(privateRoom.getMessages().values());
             mTextLastMessageOfUser.setText(messages.get(messages.size() - 1).getContent());
         }
