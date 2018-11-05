@@ -14,11 +14,6 @@ public class PrivateRoomRemoteDatasource implements PrivateRoomDataSource.Remote
     }
 
     @Override
-    public void getLastMessage(ValueEventListener valueEventListener) {
-        mDatabase.getReference(PrivateRoom.PrivateRoomKey.PRIVATE_ROOM).orderByKey().limitToLast(1).addValueEventListener(valueEventListener);
-    }
-
-    @Override
     public void getPrivateRooms(ValueEventListener valueEventListener) {
         mDatabase.getReference(PrivateRoom.PrivateRoomKey.PRIVATE_ROOM).addValueEventListener(valueEventListener);
     }
