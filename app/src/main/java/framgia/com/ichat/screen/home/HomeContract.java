@@ -6,6 +6,7 @@ import framgia.com.ichat.data.model.User;
 
 public interface HomeContract {
     interface View {
+
         void showImage(String uri);
     }
 

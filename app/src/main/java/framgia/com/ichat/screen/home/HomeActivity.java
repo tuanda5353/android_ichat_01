@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import framgia.com.ichat.GlideApp;
 import framgia.com.ichat.R;
+import framgia.com.ichat.data.model.User;
 import framgia.com.ichat.data.repository.UserRepository;
 import framgia.com.ichat.data.source.remote.UserRemoteDataSource;
 import framgia.com.ichat.screen.base.BaseActivity;
@@ -47,7 +48,7 @@ public class HomeActivity extends BaseActivity implements
     protected void initData(Bundle savedInstanceState) {
         mImageViewUser = findViewById(R.id.image_toolbar_home);
         mPresenter = new HomePresenter(this,
-                new UserRepository(new UserRemoteDataSource(FirebaseDatabase.getInstance())));
+                UserRepository.getInstance(UserRemoteDataSource.getInstance(FirebaseDatabase.getInstance())));
         mPresenter.getUser(FirebaseAuth.getInstance().getCurrentUser());
 
         mImageViewUser.setOnClickListener(this);
@@ -74,6 +75,7 @@ public class HomeActivity extends BaseActivity implements
     }
 
     @Override
+
     public void showImage(String uri) {
         GlideApp.with(this)
                 .load(uri)
@@ -94,3 +96,4 @@ public class HomeActivity extends BaseActivity implements
         startActivity(ProfileActivity.getIntent(this, mPresenter.getUSer()));
     }
 }
+

@@ -16,7 +16,7 @@ import framgia.com.ichat.data.source.remote.UserRemoteDataSource;
 import framgia.com.ichat.screen.base.BaseFragment;
 import framgia.com.ichat.screen.profile.ProfileActivity;
 
-public class OnlineUserFragment extends BaseFragment implements OnlineUserContract.View, OnlineUserAdapter.onUserItemClickListener {
+public class OnlineUserFragment extends BaseFragment implements OnlineUserContract.View, OnlineUserAdapter.OnUserItemClickListener {
     private OnlineUserContract.Presenter mPresenter;
     private OnlineUserAdapter mAdapter;
 

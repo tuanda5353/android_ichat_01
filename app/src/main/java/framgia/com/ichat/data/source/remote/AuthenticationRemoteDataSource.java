@@ -17,7 +17,7 @@ import java.util.Calendar;
 
 import framgia.com.ichat.data.model.User;
 import framgia.com.ichat.data.source.AuthenticationDataSource;
-import framgia.com.ichat.utils.Constants;
+import framgia.com.ichat.utils.Constant;
 
 public class AuthenticationRemoteDataSource implements AuthenticationDataSource.Remote {
     private FirebaseAuth mAuth;
@@ -101,7 +101,7 @@ public class AuthenticationRemoteDataSource implements AuthenticationDataSource.
                                      OnFailureListener onFailureListener) {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(mName)
-                .setPhotoUri(Uri.parse(Constants.UserProfile.DEFAULT_PROFILE_URL))
+                .setPhotoUri(Uri.parse(Constant.UserProfile.DEFAULT_PROFILE_URL))
                 .build();
         mAuth.getCurrentUser().updateProfile(profileUpdates)
                 .addOnCompleteListener(onCompleteListener)

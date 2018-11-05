@@ -18,12 +18,12 @@ import framgia.com.ichat.data.model.User;
 public class OnlineUserAdapter extends RecyclerView.Adapter<OnlineUserAdapter.ViewHolder> {
     private Context mContext;
     private List<User> mUsers;
-    private onUserItemClickListener mItemClickListener;
+    private OnUserItemClickListener mClickListener;
 
-    public OnlineUserAdapter(Context context, List<User> users, onUserItemClickListener onUserItemClickListener) {
+    public OnlineUserAdapter(Context context, List<User> users, OnUserItemClickListener onUserItemClickListener) {
         mContext = context;
         mUsers = users;
-        mItemClickListener = onUserItemClickListener;
+        mClickListener = onUserItemClickListener;
     }
 
     @NonNull
@@ -31,7 +31,7 @@ public class OnlineUserAdapter extends RecyclerView.Adapter<OnlineUserAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.item_online_room, viewGroup, false);
-        return new ViewHolder(view, mItemClickListener);
+        return new ViewHolder(view, mClickListener);
     }
 
     @Override
@@ -53,10 +53,10 @@ public class OnlineUserAdapter extends RecyclerView.Adapter<OnlineUserAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView mImageView;
         public TextView mTextName;
-        public onUserItemClickListener mClickListener;
+        public OnUserItemClickListener mClickListener;
         public User mUser;
 
-        public ViewHolder(@NonNull View itemView, onUserItemClickListener onUserItemClickListener) {
+        public ViewHolder(@NonNull View itemView, OnUserItemClickListener onUserItemClickListener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.image_avatar);
             mTextName = itemView.findViewById(R.id.text_name);
@@ -81,7 +81,7 @@ public class OnlineUserAdapter extends RecyclerView.Adapter<OnlineUserAdapter.Vi
         }
     }
 
-    public interface onUserItemClickListener {
-        void onClickUserItem(User user);
+    public interface OnUserItemClickListener {
+            void onClickUserItem(User user);
     }
 }
