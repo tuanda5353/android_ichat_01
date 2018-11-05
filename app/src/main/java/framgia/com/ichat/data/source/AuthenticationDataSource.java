@@ -27,9 +27,12 @@ public interface AuthenticationDataSource {
         void saveUserToDatabase(FirebaseUser firebaseUser);
 
         User getInformationOfUser(FirebaseUser user);
+
         void setInformationOfUser(FirebaseUser user,
                                   OnCompleteListener onCompleteListener,
                                   OnFailureListener onFailureListener);
+
+        void updateUser(FirebaseUser user);
     }
 
     interface Local {

@@ -1,5 +1,6 @@
 package framgia.com.ichat.data.source.remote;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -16,7 +17,14 @@ public class UserRemoteDataSource implements UserDataSouce.Remote {
 
     @Override
     public void getUsers(ValueEventListener valueEventListener) {
-        mDatabase.getReference(User.UserKey.USER_REFERENCE).addValueEventListener(valueEventListener);
+        mDatabase.getReference(User.UserKey.USER_REFERENCE)
+                .addValueEventListener(valueEventListener);
     }
 
+    @Override
+    public void getUser(FirebaseUser user, ValueEventListener valueEventListener) {
+        mDatabase.getReference(User.UserKey.USER_REFERENCE)
+                .child(user.getUid())
+                .addValueEventListener(valueEventListener);
+    }
 }
