@@ -16,6 +16,8 @@ public class SignUpContract {
 
         void onEmailEmpty();
 
+        void onNameEmpty();
+
         void onPasswordEmpty();
 
         void requestFocusEmail();
@@ -28,14 +30,16 @@ public class SignUpContract {
 
         void onCreateAccountFailed();
 
+        void onSetInformationFailed();
+
         void showToastShort(String message);
     }
 
     public interface Presenter extends BasePresenter<View> {
-        void createAccount(String email, String password);
+        void createAccount(String name, String email, String password);
 
         FirebaseUser getCurrentUser();
 
-        boolean isValidate(String email, String password);
+        boolean isValidate(String name, String email, String password);
     }
 }
