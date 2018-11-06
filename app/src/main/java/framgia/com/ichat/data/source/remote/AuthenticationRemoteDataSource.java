@@ -1,12 +1,10 @@
 package framgia.com.ichat.data.source.remote;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,12 +17,25 @@ import java.util.Calendar;
 
 import framgia.com.ichat.data.model.User;
 import framgia.com.ichat.data.source.AuthenticationDataSource;
-import framgia.com.ichat.utils.Constant;
+import framgia.com.ichat.utils.Constants;
 
 public class AuthenticationRemoteDataSource implements AuthenticationDataSource.Remote {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private String mName;
+
+    private static AuthenticationRemoteDataSource sInstance;
+
+    public static AuthenticationRemoteDataSource getInstance(FirebaseAuth auth, FirebaseDatabase database) {
+        if (sInstance == null) {
+            synchronized (AuthenticationRemoteDataSource.class) {
+                if (sInstance == null) {
+                    sInstance = new AuthenticationRemoteDataSource(auth, database);
+                }
+            }
+        }
+        return sInstance;
+    }
 
     public AuthenticationRemoteDataSource(FirebaseAuth auth, FirebaseDatabase firebaseDatabase) {
         mAuth = auth;
@@ -90,7 +101,7 @@ public class AuthenticationRemoteDataSource implements AuthenticationDataSource.
                                      OnFailureListener onFailureListener) {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(mName)
-                .setPhotoUri(Uri.parse(Constant.UserProfile.DEFAULT_PROFILE_URL))
+                .setPhotoUri(Uri.parse(Constants.UserProfile.DEFAULT_PROFILE_URL))
                 .build();
         mAuth.getCurrentUser().updateProfile(profileUpdates)
                 .addOnCompleteListener(onCompleteListener)

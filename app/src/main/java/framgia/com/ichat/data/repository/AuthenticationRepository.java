@@ -15,6 +15,18 @@ public class AuthenticationRepository implements AuthenticationDataSource.Remote
     private AuthenticationDataSource.Remote mRemote;
     private AuthenticationDataSource.Local mLocal;
 
+    private static AuthenticationRepository sInstance;
+
+    public static AuthenticationRepository getInstance(AuthenticationDataSource.Remote remote) {
+        if (sInstance == null) {
+            synchronized (AuthenticationRepository.class) {
+                if (sInstance == null) {
+                    sInstance = new AuthenticationRepository(remote);
+                }
+            }
+        }
+        return sInstance;
+    }
     public AuthenticationRepository(AuthenticationDataSource.Remote remote) {
         mRemote = remote;
     }
