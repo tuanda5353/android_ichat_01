@@ -12,7 +12,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
 
 import framgia.com.ichat.data.model.User;
 import framgia.com.ichat.data.source.AuthenticationDataSource;
@@ -92,6 +95,11 @@ public class AuthenticationRemoteDataSource implements AuthenticationDataSource.
         mAuth.getCurrentUser().updateProfile(profileUpdates)
                 .addOnCompleteListener(onCompleteListener)
                 .addOnFailureListener(onFailureListener);
+    }
 
+    public void updateUser(FirebaseUser user) {
+        DatabaseReference reference = mDatabase.getReference(User.UserKey.USER_REFERENCE);
+        reference.child(user.getUid()).child(User.UserKey.ONLINE).setValue(true);
+        reference.child(user.getUid()).child(User.UserKey.LAST_SING_IN).setValue(Calendar.getInstance().getTimeInMillis());
     }
 }

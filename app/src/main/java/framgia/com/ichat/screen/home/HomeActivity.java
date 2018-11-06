@@ -8,11 +8,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
+import framgia.com.ichat.GlideApp;
 import framgia.com.ichat.R;
+import framgia.com.ichat.data.repository.UserRepository;
+import framgia.com.ichat.data.source.remote.UserRemoteDataSource;
 import framgia.com.ichat.screen.base.BaseActivity;
+import framgia.com.ichat.screen.profile.ProfileActivity;
 
-public class HomeActivity extends BaseActivity implements SearchView.OnQueryTextListener {
+public class HomeActivity extends BaseActivity implements
+        SearchView.OnQueryTextListener, HomeContract.View, View.OnClickListener {
+    private HomeContract.Presenter mPresenter;
+    private ImageView mImageViewUser;
 
     @Override
     protected int getLayoutResource() {
@@ -33,7 +45,12 @@ public class HomeActivity extends BaseActivity implements SearchView.OnQueryText
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        mImageViewUser = findViewById(R.id.image_toolbar_home);
+        mPresenter = new HomePresenter(this,
+                new UserRepository(new UserRemoteDataSource(FirebaseDatabase.getInstance())));
+        mPresenter.getUser(FirebaseAuth.getInstance().getCurrentUser());
 
+        mImageViewUser.setOnClickListener(this);
     }
 
     @Override
@@ -54,5 +71,26 @@ public class HomeActivity extends BaseActivity implements SearchView.OnQueryText
     @Override
     public boolean onQueryTextChange(String s) {
         return false;
+    }
+
+    @Override
+    public void showImage(String uri) {
+        GlideApp.with(this)
+                .load(uri)
+                .circleCrop()
+                .into(mImageViewUser);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.image_toolbar_home:
+                navigateProfile();
+                break;
+        }
+    }
+
+    private void navigateProfile() {
+        startActivity(ProfileActivity.getIntent(this, mPresenter.getUSer()));
     }
 }

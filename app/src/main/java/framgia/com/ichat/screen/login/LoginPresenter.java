@@ -129,6 +129,6 @@ public class LoginPresenter implements LoginContract.Presenter, OnCompleteListen
             mLoginView.saveInformation();
         }
         mRepository.changeRememberStatus(mIsRemember);
-        mRepository.saveUserToDatabase(mRepository.getCurrentUser());
+        mRepository.updateUser(mRepository.getCurrentUser());
     }
 }

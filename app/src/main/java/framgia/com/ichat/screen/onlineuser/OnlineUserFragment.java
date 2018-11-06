@@ -14,8 +14,9 @@ import framgia.com.ichat.data.model.User;
 import framgia.com.ichat.data.repository.UserRepository;
 import framgia.com.ichat.data.source.remote.UserRemoteDataSource;
 import framgia.com.ichat.screen.base.BaseFragment;
+import framgia.com.ichat.screen.profile.ProfileActivity;
 
-public class OnlineUserFragment extends BaseFragment implements OnlineUserContract.View {
+public class OnlineUserFragment extends BaseFragment implements OnlineUserContract.View, OnlineUserAdapter.onUserItemClickListener {
     private OnlineUserContract.Presenter mPresenter;
     private OnlineUserAdapter mAdapter;
 
@@ -32,7 +33,7 @@ public class OnlineUserFragment extends BaseFragment implements OnlineUserContra
     protected void initComponents() {
         RecyclerView recyclerView = getView().findViewById(R.id.recycler_online_room);
         List<User> users = new ArrayList<>();
-        mAdapter = new OnlineUserAdapter(getActivity(), users);
+        mAdapter = new OnlineUserAdapter(getActivity(), users, this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -49,5 +50,10 @@ public class OnlineUserFragment extends BaseFragment implements OnlineUserContra
     @Override
     public void updateDataRecyclerView(List<User> users) {
         mAdapter.addData(users);
+    }
+
+    @Override
+    public void onClickUserItem(User user) {
+        startActivity(ProfileActivity.getIntent(getActivity(), user));
     }
 }
