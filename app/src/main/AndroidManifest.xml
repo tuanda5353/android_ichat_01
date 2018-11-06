@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".screen.signup.SignUpActivity" />
         <activity
             android:name=".screen.login.LoginActivity"
             android:screenOrientation="portrait">
@@ -19,12 +20,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".screen.signup.SignUpActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".screen.home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".screen.profile.ProfileActivity" />
+        <activity android:name=".screen.profile.ProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".screen.home.HomeActivity" />
+        </activity>
     </application>
 </manifest>

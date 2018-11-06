@@ -30,7 +30,6 @@ public class HomePresenter implements HomeContract.Presenter, ValueEventListener
         return mUser;
     }
 
-
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         mUser = dataSnapshot.getValue(User.class);

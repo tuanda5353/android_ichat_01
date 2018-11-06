@@ -8,8 +8,19 @@ import framgia.com.ichat.data.model.User;
 import framgia.com.ichat.data.source.UserDataSouce;
 
 public class UserRemoteDataSource implements UserDataSouce.Remote {
-
     private FirebaseDatabase mDatabase;
+    private static UserRemoteDataSource sInstance;
+
+    public static UserDataSouce.Remote getInstance(FirebaseDatabase database) {
+        if (sInstance == null) {
+            synchronized (UserRemoteDataSource.class) {
+                if (sInstance == null) {
+                    sInstance = new UserRemoteDataSource(database);
+                }
+            }
+        }
+        return sInstance;
+    }
 
     public UserRemoteDataSource(FirebaseDatabase database) {
         mDatabase = database;
