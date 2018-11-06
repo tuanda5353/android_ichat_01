@@ -34,10 +34,9 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View,
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        AuthenticationRepository repository = new AuthenticationRepository(
-                new AuthenticationRemoteDataSource(FirebaseAuth.getInstance(),
-                        FirebaseDatabase.getInstance()));
-        mPresenter = new SingUpPresenter(repository);
+        mPresenter = new SingUpPresenter(AuthenticationRepository.getInstance(
+                AuthenticationRemoteDataSource.getInstance(FirebaseAuth.getInstance(),
+                        FirebaseDatabase.getInstance())));
         mPresenter.setView(this);
     }
 

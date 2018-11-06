@@ -5,7 +5,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 
 import framgia.com.ichat.data.model.User;
@@ -16,6 +15,18 @@ public class AuthenticationRepository implements AuthenticationDataSource.Remote
     private AuthenticationDataSource.Remote mRemote;
     private AuthenticationDataSource.Local mLocal;
 
+    private static AuthenticationRepository sInstance;
+
+    public static AuthenticationRepository getInstance(AuthenticationDataSource.Remote remote) {
+        if (sInstance == null) {
+            synchronized (AuthenticationRepository.class) {
+                if (sInstance == null) {
+                    sInstance = new AuthenticationRepository(remote);
+                }
+            }
+        }
+        return sInstance;
+    }
     public AuthenticationRepository(AuthenticationDataSource.Remote remote) {
         mRemote = remote;
     }
@@ -66,6 +77,10 @@ public class AuthenticationRepository implements AuthenticationDataSource.Remote
                                      OnCompleteListener onCompleteListener,
                                      OnFailureListener onFailureListener) {
         mRemote.setInformationOfUser(user, onCompleteListener, onFailureListener);
+    }
+
+    public void updateUser(FirebaseUser user) {
+        mRemote.updateUser(user);
     }
 
     @Override
