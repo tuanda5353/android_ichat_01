@@ -3,6 +3,7 @@ package framgia.com.ichat.screen.privateroom;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import framgia.com.ichat.screen.base.BaseFragment;
 public class PrivateRoomFragment extends BaseFragment implements View.OnClickListener, PrivateRoomContract.View {
     private PrivateRoomPresenter mPresenter;
     private List<PrivateRoom> mPrivateRooms;
+    private PrivateRoomAdapter mAdapter;
 
     public static PrivateRoomFragment newInstance() {
         return new PrivateRoomFragment();
@@ -35,6 +37,9 @@ public class PrivateRoomFragment extends BaseFragment implements View.OnClickLis
         RecyclerView recyclerView = getView().findViewById(R.id.recycler_private_room);
         mPrivateRooms = new ArrayList<>();
         getView().findViewById(R.id.fab_private_room).setOnClickListener(this);
+        mAdapter = new PrivateRoomAdapter(getActivity(), mPrivateRooms);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
@@ -54,5 +59,12 @@ public class PrivateRoomFragment extends BaseFragment implements View.OnClickLis
     public void onGetDataFailed() {
         Toast.makeText(getActivity(),
                 getResources().getString(R.string.msg_get_data_failed), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGetListPrivateRoomSuccess(List<PrivateRoom> privateRooms) {
+        if (mPrivateRooms != null) {
+            mAdapter.addData(privateRooms);
+        }
     }
 }
