@@ -21,6 +21,7 @@ import framgia.com.ichat.screen.chat.ChatActivity;
 import framgia.com.ichat.screen.base.BaseFragment;
 
 public class PrivateRoomFragment extends BaseFragment implements View.OnClickListener, PrivateRoomContract.View, PrivateRoomAdapter.OnItemClickListener {
+    private static final String EXTRA_ID = "EXTRA_ID" ;
     private PrivateRoomPresenter mPresenter;
     private List<Room> mListRoom;
     private PrivateRoomAdapter mAdapter;
