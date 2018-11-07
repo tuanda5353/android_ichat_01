@@ -26,6 +26,7 @@
     <string name="profile_button_sign_out">Sign out</string>
     <string name="msg_set_information_failed">Set Information failed, update your infomation in profile screen!!</string>
     <string name="profile_text_sign_in_title">Last SingIn:</string>
+    <string name="msg_get_data_failed">An error occurred, please try again !</string>
     <string-array name="title_tab_home">
         <item>Private</item>
         <item>Online</item>
