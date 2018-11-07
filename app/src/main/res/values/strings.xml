@@ -27,6 +27,14 @@
     <string name="msg_set_information_failed">Set Information failed, update your infomation in profile screen!!</string>
     <string name="profile_text_sign_in_title">Last SingIn:</string>
     <string name="msg_get_data_failed">An error occurred, please try again !</string>
+    <string name="dialog_nagative_button">No</string>
+    <string name="dialog_positive_button">Yes</string>
+    <string name="msg_delete_conversation">Delete conversation ?</string>
+    <string name="msg_delete_conversation_failed">Delete conversation failed! Please try again!!</string>
+    <string name="msg_delete_conversation_success">Delete conversation success!</string>
+    <string name="msg_create_private_room_failed">Create private room failed! Please try again!!</string>
+    <string name="msg_create_private_room_success">Create private room success!</string>
+    <string name="title_confirm_delete">Confirm Delete</string>
     <string-array name="title_tab_home">
         <item>Private</item>
         <item>Online</item>
