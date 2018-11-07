@@ -138,5 +138,6 @@ public class User implements Parcelable {
         public static final String USER_REFERENCE = "user";
         public static final String LAST_SING_IN = "lastSignIn";
         public static final String ONLINE = "online";
+        public static final String DISPLAY_NAME = "displayName";
     }
 }
