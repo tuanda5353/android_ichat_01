@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +42,11 @@ public class OnlineUserFragment extends BaseFragment implements OnlineUserContra
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        UserRepository repository = new UserRepository(
-                new UserRemoteDataSource(FirebaseDatabase.getInstance()));
+        UserRepository repository = UserRepository.getInstance(UserRemoteDataSource.getInstance(
+                FirebaseDatabase.getInstance(),
+                FirebaseStorage.getInstance(),
+                FirebaseAuth.getInstance()
+        ));
         mPresenter = new OnlineUserPresenter(repository);
         mPresenter.setView(this);
         mPresenter.getUsers();

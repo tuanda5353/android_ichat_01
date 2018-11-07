@@ -6,17 +6,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import framgia.com.ichat.GlideApp;
 import framgia.com.ichat.R;
-import framgia.com.ichat.data.model.User;
 import framgia.com.ichat.data.repository.UserRepository;
 import framgia.com.ichat.data.source.remote.UserRemoteDataSource;
 import framgia.com.ichat.screen.base.BaseActivity;
@@ -48,16 +47,23 @@ public class HomeActivity extends BaseActivity implements
     protected void initData(Bundle savedInstanceState) {
         mImageViewUser = findViewById(R.id.image_toolbar_home);
         mPresenter = new HomePresenter(this,
-                UserRepository.getInstance(UserRemoteDataSource.getInstance(FirebaseDatabase.getInstance())));
-        mPresenter.getUser(FirebaseAuth.getInstance().getCurrentUser());
-
+                UserRepository.getInstance(UserRemoteDataSource.getInstance(
+                        FirebaseDatabase.getInstance(),
+                        FirebaseStorage.getInstance(),
+                        FirebaseAuth.getInstance()
+                )));
         mImageViewUser.setOnClickListener(this);
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getUser(FirebaseAuth.getInstance().getCurrentUser());
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_home, menu);
+        getMenuInflater().inflate(R.menu.activity_home, menu);
         MenuItem searchItem = menu.findItem(R.id.search_home);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(this);
