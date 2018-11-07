@@ -49,6 +49,7 @@ public class PrivateRoomPresenter implements PrivateRoomContract.Presenter {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     privateRooms.add(snapshot.getValue(PrivateRoom.class));
                 }
+                mView.onGetListPrivateRoomSuccess(privateRooms);
             }
 
             @Override
