@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 
+import framgia.com.ichat.ApplicationGlideModule;
 import framgia.com.ichat.GlideApp;
 import framgia.com.ichat.R;
 import framgia.com.ichat.data.model.User;
@@ -248,6 +249,8 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         GlideApp.with(this)
                 .load(pathImage)
                 .circleCrop()
+                .apply(new RequestOptions().override(ApplicationGlideModule.WIDTH,
+                        ApplicationGlideModule.HEIGHT))
                 .into(image);
     }
 
@@ -255,6 +258,8 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         GlideApp.with(this)
                 .load(bitmap)
                 .placeholder(R.drawable.ic_loading)
+                .apply(new RequestOptions().override(ApplicationGlideModule.WIDTH,
+                        ApplicationGlideModule.HEIGHT))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
                 .circleCrop()
                 .into(image);
@@ -263,6 +268,8 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     private void setImage() {
         GlideApp.with(this)
                 .load(R.drawable.ic_image_cover)
+                .apply(new RequestOptions().override(ApplicationGlideModule.WIDTH,
+                        ApplicationGlideModule.HEIGHT))
                 .into(mImageCover);
     }
 

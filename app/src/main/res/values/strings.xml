@@ -44,6 +44,8 @@
     <string name="dialog_text_header_title">Update Information</string>
     <string name="profile_permission_error">You must grant permission for this action</string>
     <string name="profile_edit_fail">Edit profile fail</string>
+    <string name="chat_screen_content">chat screen</string>
+    <string name="chat_message_hint">Reply</string>
     <string-array name="title_tab_home">
         <item>Private</item>
         <item>Online</item>
