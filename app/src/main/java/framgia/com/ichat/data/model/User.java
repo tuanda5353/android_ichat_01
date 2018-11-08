@@ -33,6 +33,15 @@ public class User implements Parcelable {
     public User() {
     }
 
+    public User(String uid, String email, String displayName, String photoUrl, long lastSignIn, boolean isOnline) {
+        mUid = uid;
+        mEmail = email;
+        mDisplayName = displayName;
+        mPhotoUrl = photoUrl;
+        mLastSignIn = lastSignIn;
+        mIsOnline = isOnline;
+    }
+
     public User(FirebaseUser user, boolean isOnline) {
         mUid = user.getUid();
         mEmail = user.getEmail();
