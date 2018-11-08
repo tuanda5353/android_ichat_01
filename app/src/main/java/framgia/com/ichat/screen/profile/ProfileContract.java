@@ -1,5 +1,6 @@
 package framgia.com.ichat.screen.profile;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
@@ -48,5 +49,17 @@ public interface ProfileContract {
 
     interface Presenter {
         void showUserInfo(FirebaseUser firebaseUser, User user);
+
+        void requestPermission(String permission, int requestCode);
+
+        void onRequestPermissionsResult(int requestCode, int[] grantResults);
+
+        void setImage(int requestCode, int resultCode, Intent data);
+
+        void update();
+
+        void updateInfo(String userName);
+
+        void initVariable();
     }
 }

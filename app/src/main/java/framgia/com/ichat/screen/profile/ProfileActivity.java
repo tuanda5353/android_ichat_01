@@ -1,5 +1,6 @@
 package framgia.com.ichat.screen.profile;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,10 +22,14 @@ import android.widget.TextView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import framgia.com.ichat.GlideApp;
 import framgia.com.ichat.R;
 import framgia.com.ichat.data.model.User;
+import framgia.com.ichat.data.repository.UserRepository;
+import framgia.com.ichat.data.source.remote.UserRemoteDataSource;
 import framgia.com.ichat.screen.base.BaseActivity;
 import framgia.com.ichat.screen.login.LoginActivity;
 
@@ -34,9 +39,9 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     public static final int PICK_IMAGE_FROM_CAMERA = 0x249;
     public static final int PERMISSIONS_REQUEST_READ_EXTERNAL = 0x141;
     public static final int PERMISSIONS_REQUEST_CAMERA = 0x142;
-    public static final Uri EXTERNAL_CONTENT_URI = "android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI"
     public static final String ACTION_PICK = Intent.ACTION_PICK;
     public static final String ACTION_IMAGE_CAPTURE = MediaStore.ACTION_IMAGE_CAPTURE;
+    public static final Uri EXTERNAL_CONTENT_URI = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
     public static final double WIDTH = 0.90;
     public static final double HEIGHT = 0.70;
     private static final String EXTRA_USER = "EXTRA_USER";
@@ -66,6 +71,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
 
     @Override
     protected void initComponents() {
+        initActionBar();
         mImageViewAvatar = findViewById(R.id.image_view_user);
         mImageCover = findViewById(R.id.image_cover_image);
         mTextUserName = findViewById(R.id.text_view_user_name);
@@ -73,8 +79,14 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         mTextLastSignIn = findViewById(R.id.text_view_user_last_sign_in);
         mButtonEdit = findViewById(R.id.button_edit_profile);
         mButtonSignOut = findViewById(R.id.button_sign_out);
-        mPresenter = new ProfilePresenter(this);
-        initActionBar();
+        mPresenter = new ProfilePresenter(this,
+                UserRepository.getInstance(UserRemoteDataSource.getInstance(
+                        FirebaseDatabase.getInstance(),
+                        FirebaseStorage.getInstance(),
+                        FirebaseAuth.getInstance()
+                )));
+        mButtonEdit.setOnClickListener(this);
+        mButtonSignOut.setOnClickListener(this);
     }
 
     @Override
