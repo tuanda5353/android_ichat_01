@@ -2,6 +2,9 @@ package framgia.com.ichat.screen.privateroom;
 
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -9,7 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import framgia.com.ichat.data.model.PrivateRoom;
+import framgia.com.ichat.data.model.Room;
 import framgia.com.ichat.data.repository.PrivateRoomRepository;
 
 public class PrivateRoomPresenter implements PrivateRoomContract.Presenter {
@@ -27,15 +30,17 @@ public class PrivateRoomPresenter implements PrivateRoomContract.Presenter {
 
     @Override
     public void createPrivateRoom() {
-        mRepository.createPrivateRoom(new ValueEventListener() {
+        mRepository.createPrivateRoom(new OnCompleteListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
+                    mView.onCreatePrivateRoomSuccess();
+                }
             }
-
+        }, new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onFailure(@NonNull Exception e) {
+                mView.onCreatePrivateRoomFailed();
             }
         });
     }
@@ -45,11 +50,13 @@ public class PrivateRoomPresenter implements PrivateRoomContract.Presenter {
         mRepository.getPrivateRooms(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<PrivateRoom> privateRooms = new ArrayList<>();
+                List<Room> listRoom = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    privateRooms.add(snapshot.getValue(PrivateRoom.class));
+                    Room room = snapshot.getValue(Room.class);
+                    room.setId(snapshot.getKey());
+                    listRoom.add(room);
                 }
-                mView.onGetListPrivateRoomSuccess(privateRooms);
+                mView.onGetListPrivateRoomSuccess(listRoom);
             }
 
             @Override
@@ -57,5 +64,25 @@ public class PrivateRoomPresenter implements PrivateRoomContract.Presenter {
                 mView.onGetDataFailed();
             }
         });
+    }
+
+    @Override
+    public void deletePrivateRoom(String id) {
+        mRepository.deletePrivateRoom(id,
+                new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()) {
+                            mView.onDeletePrivateRoomSuccess();
+                        }
+                    }
+                },
+                new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        mView.onDeletePrivateRoomFailed();
+                    }
+                }
+        );
     }
 }

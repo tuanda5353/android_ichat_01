@@ -66,4 +66,9 @@ public class Message {
     public void setSenderImage(String senderImage) {
         mSenderImage = senderImage;
     }
+    public class MessageKey{
+        public static final String CONTENT_DEFAULT = "Invite people join chat with you!";
+        public static final String SENDER_IMAGE_DEFAULT = "https://www.mobafire.com/images/avatars/ashe-championship.png";
+        public static final String SENDER_NAME_DEFAULT = "IChat";
+    }
 }
