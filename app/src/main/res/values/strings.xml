@@ -35,6 +35,15 @@
     <string name="msg_create_private_room_failed">Create private room failed! Please try again!!</string>
     <string name="msg_create_private_room_success">Create private room success!</string>
     <string name="title_confirm_delete">Confirm Delete</string>
+    <string name="profile_text_full_name">Full name :</string>
+    <string name="profile_text_image">Image :</string>
+    <string name="profile_full_name_hint">Full name</string>
+    <string name="dialog_profile_button_gallery_title">Gallery</string>
+    <string name="dialog_profile_button_camera_title">Camera</string>
+    <string name="dialog_profile_button_update_title">Update</string>
+    <string name="dialog_text_header_title">Update Information</string>
+    <string name="profile_permission_error">You must grant permission for this action</string>
+    <string name="profile_edit_fail">Edit profile fail</string>
     <string-array name="title_tab_home">
         <item>Private</item>
         <item>Online</item>

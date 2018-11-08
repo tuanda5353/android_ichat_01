@@ -1,6 +1,7 @@
 package framgia.com.ichat.screen.login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,11 +31,22 @@ import framgia.com.ichat.screen.signup.SignUpActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View,
         View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    public static final int ACTION_FLAG_ACTIVITY_CLEAR_TOP = Intent.FLAG_ACTIVITY_CLEAR_TOP;
+    public static final int ACTION_FLAG_ACTIVITY_CLEAR_TASK = Intent.FLAG_ACTIVITY_CLEAR_TASK;
+    public static final int ACTION_FLAG_ACTIVITY_NEW_TASK = Intent.FLAG_ACTIVITY_NEW_TASK;
     private EditText mEditTextEmail, mEditTextPassword;
     private LoginContract.Presenter mPresenter;
     private ProgressDialog mProgressLogin;
     private CheckBox mCheckBoxRemember;
     private TextView mTextViewShowError;
+
+    public static Intent getIntent(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(ACTION_FLAG_ACTIVITY_CLEAR_TOP |
+                ACTION_FLAG_ACTIVITY_CLEAR_TASK |
+                ACTION_FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
