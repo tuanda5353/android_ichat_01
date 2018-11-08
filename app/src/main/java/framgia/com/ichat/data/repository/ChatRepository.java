@@ -1,7 +1,10 @@
 package framgia.com.ichat.data.repository;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.ValueEventListener;
 
+import framgia.com.ichat.data.model.Message;
 import framgia.com.ichat.data.source.ChatDataSource;
 
 public class ChatRepository implements ChatDataSource.Remote {
@@ -24,7 +27,17 @@ public class ChatRepository implements ChatDataSource.Remote {
     }
 
     @Override
-    public void getListMessage(String id, ValueEventListener valueEventListener) {
-        mRemote.getListMessage(id, valueEventListener);
+    public void getMessages(String id, ValueEventListener valueEventListener) {
+        mRemote.getMessages(id, valueEventListener);
+    }
+
+    @Override
+    public void sendMessage(FirebaseUser user, String roomId, Message message) {
+        mRemote.sendMessage(user, roomId, message);
+    }
+
+    @Override
+    public void addOnChildChange(String roomId, ChildEventListener childEventListener) {
+        mRemote.addOnChildChange(roomId, childEventListener);
     }
 }

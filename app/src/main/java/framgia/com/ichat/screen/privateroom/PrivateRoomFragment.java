@@ -108,5 +108,4 @@ public class PrivateRoomFragment extends BaseFragment implements View.OnClickLis
                 }
         );
     }
-
 }

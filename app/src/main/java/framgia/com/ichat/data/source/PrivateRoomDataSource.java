@@ -6,10 +6,13 @@ import com.google.firebase.database.ValueEventListener;
 
 public interface PrivateRoomDataSource {
     interface Remote {
-        void getPrivateRooms(ValueEventListener valueEventListener);
+        void getRooms(ValueEventListener valueEventListener);
 
-        void createPrivateRoom(OnCompleteListener onCompleteListener, OnFailureListener onFailureListener);
+        void createRoom(OnCompleteListener onCompleteListener,
+                        OnFailureListener onFailureListener);
 
-        void deletePrivateRoom(String id, OnCompleteListener onCompleteListener, OnFailureListener onFailureListener);
+        void deleteRoom(String id,
+                        OnCompleteListener onCompleteListener,
+                        OnFailureListener onFailureListener);
     }
 }
