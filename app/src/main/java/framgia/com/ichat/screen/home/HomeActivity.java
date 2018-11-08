@@ -10,10 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 
+import framgia.com.ichat.ApplicationGlideModule;
 import framgia.com.ichat.GlideApp;
 import framgia.com.ichat.R;
 import framgia.com.ichat.data.repository.UserRepository;
@@ -85,6 +87,8 @@ public class HomeActivity extends BaseActivity implements
     public void showImage(String uri) {
         GlideApp.with(this)
                 .load(uri)
+                .apply(new RequestOptions().override(ApplicationGlideModule.WIDTH,
+                        ApplicationGlideModule.HEIGHT))
                 .circleCrop()
                 .into(mImageViewUser);
     }
