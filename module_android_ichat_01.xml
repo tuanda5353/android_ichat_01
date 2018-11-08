@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_android_ichat_01" default="compile.module.android_ichat_01">
+  <dirname property="module.android_ichat_01.basedir" file="${ant.file.module_android_ichat_01}"/>
+  
+  <property name="module.jdk.home.android_ichat_01" value="${jdk.home.1.8}"/>
+  <property name="module.jdk.bin.android_ichat_01" value="${jdk.bin.1.8}"/>
+  <property name="module.jdk.classpath.android_ichat_01" value="jdk.classpath.1.8"/>
+  
+  <property name="compiler.args.android_ichat_01" value="-encoding UTF-8 -source 7 -target 7 ${compiler.args}"/>
+  
+  <property name="android_ichat_01.output.dir" value="${module.android_ichat_01.basedir}/out/production/classes"/>
+  <property name="android_ichat_01.testoutput.dir" value="${module.android_ichat_01.basedir}/out/test/classes"/>
+  
+  <path id="android_ichat_01.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="android_ichat_01.module.production.classpath">
+    <path refid="${module.jdk.classpath.android_ichat_01}"/>
+  </path>
+  
+  <path id="android_ichat_01.runtime.production.module.classpath">
+    <pathelement location="${android_ichat_01.output.dir}"/>
+  </path>
+  
+  <path id="android_ichat_01.module.classpath">
+    <path refid="${module.jdk.classpath.android_ichat_01}"/>
+    <pathelement location="${android_ichat_01.output.dir}"/>
+  </path>
+  
+  <path id="android_ichat_01.runtime.module.classpath">
+    <pathelement location="${android_ichat_01.testoutput.dir}"/>
+    <pathelement location="${android_ichat_01.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.android_ichat_01">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.android_ichat_01">
+    <patternset refid="excluded.from.module.android_ichat_01"/>
+  </patternset>
+  
+  
+  <target name="compile.module.android_ichat_01" depends="compile.module.android_ichat_01.production,compile.module.android_ichat_01.tests" description="Compile module android_ichat_01"/>
+  
+  <target name="compile.module.android_ichat_01.production" depends="register.custom.compilers" description="Compile module android_ichat_01; production classes"/>
+  
+  <target name="compile.module.android_ichat_01.tests" depends="register.custom.compilers,compile.module.android_ichat_01.production" description="compile module android_ichat_01; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.android_ichat_01" description="cleanup module">
+    <delete dir="${android_ichat_01.output.dir}"/>
+    <delete dir="${android_ichat_01.testoutput.dir}"/>
+  </target>
+</project>

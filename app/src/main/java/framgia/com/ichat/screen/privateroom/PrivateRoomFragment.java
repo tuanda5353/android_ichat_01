@@ -1,7 +1,6 @@
 package framgia.com.ichat.screen.privateroom;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +16,8 @@ import framgia.com.ichat.R;
 import framgia.com.ichat.data.model.Room;
 import framgia.com.ichat.data.repository.PrivateRoomRepository;
 import framgia.com.ichat.data.source.remote.PrivateRoomRemoteDatasource;
-import framgia.com.ichat.screen.chat.ChatActivity;
 import framgia.com.ichat.screen.base.BaseFragment;
+import framgia.com.ichat.screen.chat.ChatActivity;
 
 public class PrivateRoomFragment extends BaseFragment implements View.OnClickListener, PrivateRoomContract.View, PrivateRoomAdapter.OnItemClickListener {
     private static final String EXTRA_ID = "EXTRA_ID" ;

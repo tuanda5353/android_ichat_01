@@ -33,7 +33,7 @@ public class PrivateRoomPresenter implements PrivateRoomContract.Presenter {
         mRepository.createPrivateRoom(new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
-                if (task.isSuccessful()) {q
+                if (task.isSuccessful()) {
                     mView.onCreatePrivateRoomSuccess();
                 }
             }
