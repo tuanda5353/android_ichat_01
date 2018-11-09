@@ -46,17 +46,19 @@ public class PrivateRoomPresenter implements PrivateRoomContract.Presenter {
     }
 
     @Override
-    public void getPrivateRooms() {
+    public void getPrivateRooms(final String id) {
         mRepository.getPrivateRooms(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Room> listRoom = new ArrayList<>();
+                List<Room> rooms = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Room room = snapshot.getValue(Room.class);
-                    room.setId(snapshot.getKey());
-                    listRoom.add(room);
+                    if (room.getMembers().values().contains(id)) {
+                        room.setId(snapshot.getKey());
+                        rooms.add(room);
+                    }
                 }
-                mView.onGetListPrivateRoomSuccess(listRoom);
+                mView.onGetPrivateRoomsSuccess(rooms);
             }
 
             @Override

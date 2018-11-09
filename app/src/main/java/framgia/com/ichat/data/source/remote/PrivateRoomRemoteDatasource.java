@@ -2,6 +2,7 @@ package framgia.com.ichat.data.source.remote;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -18,21 +19,23 @@ import framgia.com.ichat.utils.Constant;
 public class PrivateRoomRemoteDatasource implements PrivateRoomDataSource.Remote {
     private static final String PATTERN = "EEE, d MMM yyyy, HH:mm";
     private FirebaseDatabase mDatabase;
+    private FirebaseAuth mAuth;
     private static PrivateRoomRemoteDatasource sInstance;
 
-    public static PrivateRoomRemoteDatasource getInstance(FirebaseDatabase database) {
+    public static PrivateRoomRemoteDatasource getInstance(FirebaseDatabase database, FirebaseAuth auth) {
         if (sInstance == null) {
             synchronized (PrivateRoomRemoteDatasource.class) {
                 if (sInstance == null) {
-                    sInstance = new PrivateRoomRemoteDatasource(database);
+                    sInstance = new PrivateRoomRemoteDatasource(database, auth);
                 }
             }
         }
         return sInstance;
     }
 
-    private PrivateRoomRemoteDatasource(FirebaseDatabase database) {
+    private PrivateRoomRemoteDatasource(FirebaseDatabase database, FirebaseAuth auth) {
         mDatabase = database;
+        mAuth = auth;
     }
 
     @Override
@@ -51,17 +54,20 @@ public class PrivateRoomRemoteDatasource implements PrivateRoomDataSource.Remote
                 .push()
                 .getKey();
         Room room = new Room();
-        HashMap<String, Message> hashMap = new HashMap<>();
+        HashMap<String, Message> messages = new HashMap<>();
+        HashMap<String, String> members = new HashMap<>();
         Message message = new Message(
                 Message.MessageKey.CONTENT_DEFAULT,
                 getCurrentTime(),
                 messageId,
                 Message.MessageKey.SENDER_NAME_DEFAULT,
                 Message.MessageKey.SENDER_IMAGE_DEFAULT);
-        hashMap.put(messageId, message);
+        messages.put(messageId, message);
+        members.put(mAuth.getUid(), mAuth.getUid());
         room.setName(Room.PrivateRoomKey.NAME_DEFAULT);
         room.setImage(Room.PrivateRoomKey.IMAGE_DEFAULT);
-        room.setMessages(hashMap);
+        room.setMessages(messages);
+        room.setMembers(members);
         mDatabase.getReference(Room.PrivateRoomKey.PRIVATE_ROOM).child(roomId).setValue(room);
 
     }

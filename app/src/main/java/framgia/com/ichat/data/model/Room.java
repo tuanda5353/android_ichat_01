@@ -7,11 +7,13 @@ public class Room {
     private String mName;
     private HashMap<String, Message> mMessages;
     private String mImage;
+    private HashMap<String,String> mMembers;
 
-    public Room(String id, String name, HashMap<String, Message> messages) {
-        mId = id;
+    public Room(String name, HashMap<String, Message> messages, String image, HashMap<String, String> members) {
         mName = name;
         mMessages = messages;
+        mImage = image;
+        mMembers = members;
     }
 
     public Room() {
@@ -47,6 +49,14 @@ public class Room {
 
     public void setImage(String image) {
         mImage = image;
+    }
+
+    public HashMap<String,String> getMembers() {
+        return mMembers;
+    }
+
+    public void setMembers(HashMap<String,String> members) {
+        mMembers = members;
     }
 
     public class PrivateRoomKey {

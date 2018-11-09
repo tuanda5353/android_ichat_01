@@ -1,13 +1,13 @@
 package framgia.com.ichat.screen.privateroom;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -20,9 +20,10 @@ import framgia.com.ichat.data.source.remote.PrivateRoomRemoteDatasource;
 import framgia.com.ichat.screen.chat.ChatActivity;
 import framgia.com.ichat.screen.base.BaseFragment;
 
-public class PrivateRoomFragment extends BaseFragment implements View.OnClickListener, PrivateRoomContract.View, PrivateRoomAdapter.OnItemClickListener {
+public class PrivateRoomFragment extends BaseFragment implements View.OnClickListener,
+        PrivateRoomContract.View, PrivateRoomAdapter.OnItemClickListener {
     private PrivateRoomPresenter mPresenter;
-    private List<Room> mListRoom;
+    private List<Room> mRooms;
     private PrivateRoomAdapter mAdapter;
 
     public static PrivateRoomFragment newInstance() {
@@ -37,9 +38,9 @@ public class PrivateRoomFragment extends BaseFragment implements View.OnClickLis
     @Override
     protected void initComponents() {
         RecyclerView recyclerView = getView().findViewById(R.id.recycler_private_room);
-        mListRoom = new ArrayList<>();
+        mRooms = new ArrayList<>();
         getView().findViewById(R.id.fab_private_room).setOnClickListener(this);
-        mAdapter = new PrivateRoomAdapter(getActivity(), mListRoom);
+        mAdapter = new PrivateRoomAdapter(getActivity(), mRooms);
         mAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -48,9 +49,9 @@ public class PrivateRoomFragment extends BaseFragment implements View.OnClickLis
     @Override
     protected void initData(Bundle savedInstanceState) {
         mPresenter = new PrivateRoomPresenter(PrivateRoomRepository.getInstance
-                (PrivateRoomRemoteDatasource.getInstance(FirebaseDatabase.getInstance())));
+                (PrivateRoomRemoteDatasource.getInstance(FirebaseDatabase.getInstance(), FirebaseAuth.getInstance())));
         mPresenter.setView(this);
-        mPresenter.getPrivateRooms();
+        mPresenter.getPrivateRooms(FirebaseAuth.getInstance().getUid());
     }
 
     @Override
@@ -65,9 +66,9 @@ public class PrivateRoomFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
-    public void onGetListPrivateRoomSuccess(List<Room> listRoom) {
-        if (listRoom != null) {
-            mAdapter.addData(listRoom);
+    public void onGetPrivateRoomsSuccess(List<Room> rooms) {
+        if (rooms != null) {
+            mAdapter.addData(rooms);
         }
     }
 
@@ -93,7 +94,7 @@ public class PrivateRoomFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onItemClick(View itemView, int position) {
-        startActivity(ChatActivity.getChatIntent(getActivity(), mListRoom.get(position).getId()));
+        startActivity(ChatActivity.getChatIntent(getActivity(), mRooms.get(position).getId()));
     }
 
     @Override
@@ -102,7 +103,7 @@ public class PrivateRoomFragment extends BaseFragment implements View.OnClickLis
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mPresenter.deletePrivateRoom(mListRoom.get(position).getId());
+                        mPresenter.deletePrivateRoom(mRooms.get(position).getId());
                     }
                 }
         );

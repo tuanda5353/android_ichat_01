@@ -9,7 +9,7 @@ public class PrivateRoomContract {
     public interface View {
         void onGetDataFailed();
 
-        void onGetListPrivateRoomSuccess(List<Room> listRoom);
+        void onGetPrivateRoomsSuccess(List<Room> rooms);
 
         void onDeletePrivateRoomSuccess();
 
@@ -23,7 +23,7 @@ public class PrivateRoomContract {
     public interface Presenter extends BasePresenter<View> {
         void createPrivateRoom();
 
-        void getPrivateRooms();
+        void getPrivateRooms(String id);
 
         void deletePrivateRoom(String id);
     }
