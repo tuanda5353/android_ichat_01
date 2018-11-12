@@ -6,7 +6,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -14,26 +13,25 @@ import java.util.HashMap;
 import framgia.com.ichat.data.model.Message;
 import framgia.com.ichat.data.model.Room;
 import framgia.com.ichat.data.source.PrivateRoomDataSource;
-import framgia.com.ichat.utils.Constant;
 
-public class PrivateRoomRemoteDatasource implements PrivateRoomDataSource.Remote {
+public class PrivateRoomRemoteDataSource implements PrivateRoomDataSource.Remote {
     private static final String PATTERN = "EEE, d MMM yyyy, HH:mm";
     private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
-    private static PrivateRoomRemoteDatasource sInstance;
+    private static PrivateRoomRemoteDataSource sInstance;
 
-    public static PrivateRoomRemoteDatasource getInstance(FirebaseDatabase database, FirebaseAuth auth) {
+    public static PrivateRoomRemoteDataSource getInstance(FirebaseDatabase database, FirebaseAuth auth) {
         if (sInstance == null) {
-            synchronized (PrivateRoomRemoteDatasource.class) {
+            synchronized (PrivateRoomRemoteDataSource.class) {
                 if (sInstance == null) {
-                    sInstance = new PrivateRoomRemoteDatasource(database, auth);
+                    sInstance = new PrivateRoomRemoteDataSource(database, auth);
                 }
             }
         }
         return sInstance;
     }
 
-    private PrivateRoomRemoteDatasource(FirebaseDatabase database, FirebaseAuth auth) {
+    private PrivateRoomRemoteDataSource(FirebaseDatabase database, FirebaseAuth auth) {
         mDatabase = database;
         mAuth = auth;
     }

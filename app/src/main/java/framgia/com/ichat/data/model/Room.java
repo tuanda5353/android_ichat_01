@@ -7,7 +7,7 @@ public class Room {
     private String mName;
     private HashMap<String, Message> mMessages;
     private String mImage;
-    private HashMap<String,String> mMembers;
+    private HashMap<String, String> mMembers;
 
     public Room(String name, HashMap<String, Message> messages, String image, HashMap<String, String> members) {
         mName = name;
@@ -51,17 +51,25 @@ public class Room {
         mImage = image;
     }
 
-    public HashMap<String,String> getMembers() {
+    public HashMap<String, String> getMembers() {
         return mMembers;
     }
 
-    public void setMembers(HashMap<String,String> members) {
+    public void setMembers(HashMap<String, String> members) {
         mMembers = members;
     }
 
     public class PrivateRoomKey {
         public static final String PRIVATE_ROOM = "PRIVATE_ROOM";
         public static final String NAME_DEFAULT = "New private room";
-        public static final String IMAGE_DEFAULT = "http://mblogthumb2.phinf.naver.net/MjAxODAyMTdfMjY4/MDAxNTE4ODcyMjgzMjkx.bTHfo2nyfi6jkIbkD8iUrbDpTEl09zg6PgPA-IKugsYg.C5kpAXWEyUo2nbG1AlcoTpU2abpU2e7ofBJCQgqJ-RUg.JPEG.smilecat007/%EB%A1%A4_%EC%8B%9C%EC%A6%8C8_%EB%9F%BC%EB%B8%94_%EB%A3%AC_1.jpg?type=w800";
+        public static final String IMAGE_DEFAULT =
+                "https://cdn2-www.dogtime.com/assets/uploads/2017/09/pit-bull-puppies-3.jpg";
+    }
+
+    public class PublicRoomKey {
+        public static final String PUBLIC_ROOM = "PUBLIC_ROOM";
+        public static final String NAME_DEFAULT = "New public room";
+        public static final String IMAGE_DEFAULT =
+                "http://thepublicvoice.org/wordpress/wp-content/uploads/2016/01/TPV-people-hp.jpg";
     }
 }
