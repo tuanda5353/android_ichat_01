@@ -19,13 +19,13 @@ import framgia.com.ichat.data.model.Room;
 
 public class PrivateRoomAdapter extends RecyclerView.Adapter<PrivateRoomAdapter.ViewHolder> {
     private Context mContext;
-    private List<Room> mListRoom;
+    private List<Room> mRooms;
     private LayoutInflater mLayoutInflater;
     private OnItemClickListener mOnItemClickListener;
 
-    public PrivateRoomAdapter(Context context, List<Room> listRoom) {
+    public PrivateRoomAdapter(Context context, List<Room> rooms) {
         mContext = context;
-        mListRoom = listRoom;
+        mRooms = rooms;
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
@@ -41,17 +41,17 @@ public class PrivateRoomAdapter extends RecyclerView.Adapter<PrivateRoomAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.bindView(mContext, mListRoom.get(i));
+        viewHolder.bindView(mContext, mRooms.get(i));
     }
 
     @Override
     public int getItemCount() {
-        return mListRoom != null ? mListRoom.size() : 0;
+        return mRooms != null ? mRooms.size() : 0;
     }
 
-    public void addData(List<Room> listRoom) {
-        mListRoom.clear();
-        mListRoom.addAll(listRoom);
+    public void addData(List<Room> rooms) {
+        mRooms.clear();
+        mRooms.addAll(rooms);
         notifyDataSetChanged();
     }
 
