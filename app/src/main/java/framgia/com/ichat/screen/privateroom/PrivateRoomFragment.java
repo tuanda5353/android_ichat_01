@@ -16,7 +16,7 @@ import java.util.List;
 import framgia.com.ichat.R;
 import framgia.com.ichat.data.model.Room;
 import framgia.com.ichat.data.repository.PrivateRoomRepository;
-import framgia.com.ichat.data.source.remote.PrivateRoomRemoteDatasource;
+import framgia.com.ichat.data.source.remote.PrivateRoomRemoteDataSource;
 import framgia.com.ichat.screen.chat.ChatActivity;
 import framgia.com.ichat.screen.base.BaseFragment;
 
@@ -49,7 +49,7 @@ public class PrivateRoomFragment extends BaseFragment implements View.OnClickLis
     @Override
     protected void initData(Bundle savedInstanceState) {
         mPresenter = new PrivateRoomPresenter(PrivateRoomRepository.getInstance
-                (PrivateRoomRemoteDatasource.getInstance(FirebaseDatabase.getInstance(), FirebaseAuth.getInstance())));
+                (PrivateRoomRemoteDataSource.getInstance(FirebaseDatabase.getInstance(), FirebaseAuth.getInstance())));
         mPresenter.setView(this);
         mPresenter.getPrivateRooms(FirebaseAuth.getInstance().getUid());
     }
