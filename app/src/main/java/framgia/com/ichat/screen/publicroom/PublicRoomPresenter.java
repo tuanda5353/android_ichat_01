@@ -28,16 +28,17 @@ public class PublicRoomPresenter implements PublicRoomContract.Presenter {
                 List<Room> rooms = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Room room = snapshot.getValue(Room.class);
-                    if (room.getMembers().values().contains(id)) {
+                    if (room.getMembers().keySet().contains(id)) {
                         room.setId(snapshot.getKey());
                         rooms.add(room);
                     }
                 }
+                mView.onGetRoomsSuccess(rooms);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                mView.onGetRoomsFailed(databaseError.getMessage());
             }
         });
     }

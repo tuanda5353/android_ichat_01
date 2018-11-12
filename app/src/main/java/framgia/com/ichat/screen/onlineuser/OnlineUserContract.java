@@ -7,7 +7,9 @@ import framgia.com.ichat.screen.base.BasePresenter;
 
 public class OnlineUserContract {
     interface View {
-        void updateDataRecyclerView(List<User> users);
+        void onGetUsersSuccess(List<User> users);
+
+        void onGetUsersFailed(String message);
     }
 
     public interface Presenter extends BasePresenter<View> {

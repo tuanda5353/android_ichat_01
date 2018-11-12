@@ -6,6 +6,7 @@
     android:background="@color/color_light_gray">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_public_room"
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_0"
         app:layout_constraintBottom_toBottomOf="parent"

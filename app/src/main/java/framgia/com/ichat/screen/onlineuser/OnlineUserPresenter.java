@@ -34,13 +34,16 @@ public class OnlineUserPresenter implements OnlineUserContract.Presenter, ValueE
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         List users = new ArrayList<User>();
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-            users.add(snapshot.getValue(User.class));
+            User user = snapshot.getValue(User.class);
+            if (!user.isOnline()) {
+                users.add(user);
+            }
         }
-        mView.updateDataRecyclerView(users);
+        mView.onGetUsersSuccess(users);
     }
 
     @Override
     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+        mView.onGetUsersFailed(databaseError.getMessage());
     }
 }

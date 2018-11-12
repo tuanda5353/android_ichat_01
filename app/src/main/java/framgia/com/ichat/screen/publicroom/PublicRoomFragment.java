@@ -1,17 +1,27 @@
 package framgia.com.ichat.screen.publicroom;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import framgia.com.ichat.R;
+import framgia.com.ichat.data.model.Room;
 import framgia.com.ichat.data.repository.PublicRoomRepository;
 import framgia.com.ichat.data.source.remote.PublicRoomRemoteDataSource;
 import framgia.com.ichat.screen.base.BaseFragment;
 
-public class PublicRoomFragment extends BaseFragment implements PublicRoomContract.View {
+public class PublicRoomFragment extends BaseFragment implements PublicRoomContract.View, View.OnClickListener {
+    private static final int SPAN = 2;
     private PublicRoomContract.Presenter mPresenter;
+    private PublicRoomAdapter mAdapter;
 
     public static PublicRoomFragment newInstance() {
         return new PublicRoomFragment();
@@ -24,7 +34,12 @@ public class PublicRoomFragment extends BaseFragment implements PublicRoomContra
 
     @Override
     protected void initComponents() {
-
+        RecyclerView recyclerView = getView().findViewById(R.id.recycler_public_room);
+        getView().findViewById(R.id.fab_public_room).setOnClickListener(this);
+        List<Room> rooms = new ArrayList<>();
+        mAdapter = new PublicRoomAdapter(getActivity(), rooms);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), SPAN));
     }
 
     @Override
@@ -34,5 +49,20 @@ public class PublicRoomFragment extends BaseFragment implements PublicRoomContra
                         FirebaseDatabase.getInstance(), FirebaseAuth.getInstance())));
         mPresenter.setView(this);
         mPresenter.getPublicRooms(FirebaseAuth.getInstance().getUid());
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onGetRoomsSuccess(List<Room> rooms) {
+        mAdapter.addData(rooms);
+    }
+
+    @Override
+    public void onGetRoomsFailed(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

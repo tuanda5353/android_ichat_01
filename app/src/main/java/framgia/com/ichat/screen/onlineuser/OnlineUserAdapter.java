@@ -45,9 +45,11 @@ public class OnlineUserAdapter extends RecyclerView.Adapter<OnlineUserAdapter.Vi
     }
 
     public void addData(List<User> users) {
-        mUsers.clear();
-        mUsers.addAll(users);
-        notifyDataSetChanged();
+        if (users != null) {
+            mUsers.clear();
+            mUsers.addAll(users);
+            notifyDataSetChanged();
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -76,12 +78,12 @@ public class OnlineUserAdapter extends RecyclerView.Adapter<OnlineUserAdapter.Vi
         @Override
         public void onClick(View v) {
             if (mClickListener != null) {
-                mClickListener.onClickUserItem(mUser);
+                mClickListener.onUserItemClick(mUser);
             }
         }
     }
 
     public interface OnUserItemClickListener {
-            void onClickUserItem(User user);
+        void onUserItemClick(User user);
     }
 }

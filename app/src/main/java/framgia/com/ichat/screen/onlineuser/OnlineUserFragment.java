@@ -3,6 +3,7 @@ package framgia.com.ichat.screen.onlineuser;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -18,7 +19,8 @@ import framgia.com.ichat.data.source.remote.UserRemoteDataSource;
 import framgia.com.ichat.screen.base.BaseFragment;
 import framgia.com.ichat.screen.profile.ProfileActivity;
 
-public class OnlineUserFragment extends BaseFragment implements OnlineUserContract.View, OnlineUserAdapter.OnUserItemClickListener {
+public class OnlineUserFragment extends BaseFragment implements OnlineUserContract.View,
+        OnlineUserAdapter.OnUserItemClickListener {
     private OnlineUserContract.Presenter mPresenter;
     private OnlineUserAdapter mAdapter;
 
@@ -53,12 +55,17 @@ public class OnlineUserFragment extends BaseFragment implements OnlineUserContra
     }
 
     @Override
-    public void updateDataRecyclerView(List<User> users) {
+    public void onGetUsersSuccess(List<User> users) {
         mAdapter.addData(users);
     }
 
     @Override
-    public void onClickUserItem(User user) {
+    public void onGetUsersFailed(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUserItemClick(User user) {
         startActivity(ProfileActivity.getIntent(getActivity(), user));
     }
 }
