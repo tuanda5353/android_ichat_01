@@ -46,6 +46,7 @@
     <string name="profile_edit_fail">Edit profile fail</string>
     <string name="chat_screen_content">chat screen</string>
     <string name="chat_message_hint">Reply</string>
+    <string name="char_comma">,</string>
     <string-array name="title_tab_home">
         <item>Private</item>
         <item>Online</item>
