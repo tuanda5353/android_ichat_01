@@ -37,14 +37,14 @@ public class PrivateRoomRemoteDataSource implements PrivateRoomDataSource.Remote
     }
 
     @Override
-    public void getPrivateRooms(ValueEventListener valueEventListener) {
+    public void getRooms(ValueEventListener valueEventListener) {
         mDatabase.getReference(
                 Room.PrivateRoomKey.PRIVATE_ROOM)
                 .addValueEventListener(valueEventListener);
     }
 
     @Override
-    public void createPrivateRoom(OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
+    public void createRoom(OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
         String roomId = mDatabase.getReference(Room.PrivateRoomKey.PRIVATE_ROOM)
                 .push()
                 .getKey();
@@ -57,7 +57,7 @@ public class PrivateRoomRemoteDataSource implements PrivateRoomDataSource.Remote
         Message message = new Message(
                 Message.MessageKey.CONTENT_DEFAULT,
                 getCurrentTime(),
-                messageId,
+                Message.MessageKey.SENDER_ID_DEFAULT,
                 Message.MessageKey.SENDER_NAME_DEFAULT,
                 Message.MessageKey.SENDER_IMAGE_DEFAULT);
         messages.put(messageId, message);
@@ -71,7 +71,7 @@ public class PrivateRoomRemoteDataSource implements PrivateRoomDataSource.Remote
     }
 
     @Override
-    public void deletePrivateRoom(String id, OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
+    public void deleteRoom(String id, OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
         mDatabase.getReference(Room.PrivateRoomKey.PRIVATE_ROOM)
                 .child(id)
                 .removeValue()

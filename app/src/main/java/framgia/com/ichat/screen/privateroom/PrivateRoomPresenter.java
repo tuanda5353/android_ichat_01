@@ -30,7 +30,7 @@ public class PrivateRoomPresenter implements PrivateRoomContract.Presenter {
 
     @Override
     public void createPrivateRoom() {
-        mRepository.createPrivateRoom(new OnCompleteListener() {
+        mRepository.createRoom(new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {
@@ -47,7 +47,7 @@ public class PrivateRoomPresenter implements PrivateRoomContract.Presenter {
 
     @Override
     public void getPrivateRooms(final String id) {
-        mRepository.getPrivateRooms(new ValueEventListener() {
+        mRepository.getRooms(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Room> rooms = new ArrayList<>();
@@ -70,7 +70,7 @@ public class PrivateRoomPresenter implements PrivateRoomContract.Presenter {
 
     @Override
     public void deletePrivateRoom(String id) {
-        mRepository.deletePrivateRoom(id,
+        mRepository.deleteRoom(id,
                 new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {

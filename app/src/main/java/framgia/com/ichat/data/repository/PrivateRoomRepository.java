@@ -26,17 +26,17 @@ public class PrivateRoomRepository implements PrivateRoomDataSource.Remote {
     }
 
     @Override
-    public void getPrivateRooms(ValueEventListener valueEventListener) {
-        mRemote.getPrivateRooms(valueEventListener);
+    public void getRooms(ValueEventListener valueEventListener) {
+        mRemote.getRooms(valueEventListener);
     }
 
     @Override
-    public void createPrivateRoom(OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
-        mRemote.createPrivateRoom(onCompleteListener, onFailureListener);
+    public void createRoom(OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
+        mRemote.createRoom(onCompleteListener, onFailureListener);
     }
 
     @Override
-    public void deletePrivateRoom(String id, OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
-        mRemote.deletePrivateRoom(id, onCompleteListener, onFailureListener);
+    public void deleteRoom(String id, OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
+        mRemote.deleteRoom(id, onCompleteListener, onFailureListener);
     }
 }
