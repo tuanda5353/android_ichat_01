@@ -42,6 +42,11 @@ public class UserRepository implements UserDataSouce.Remote {
     }
 
     @Override
+    public void getUser(String id, ValueEventListener valueEventListener) {
+        mRemote.getUser(id, valueEventListener);
+    }
+
+    @Override
     public void uploadImage(FirebaseUser user, Uri file,
                             OnCompleteListener onCompleteListener,
                             OnFailureListener onFailureListener) {

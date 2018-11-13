@@ -59,6 +59,13 @@ public class UserRemoteDataSource implements UserDataSouce.Remote {
     }
 
     @Override
+    public void getUser(String id, ValueEventListener valueEventListener) {
+        mDatabase.getReference(User.UserKey.USER_REFERENCE)
+                .child(id)
+                .addValueEventListener(valueEventListener);
+    }
+
+    @Override
     public void uploadImage(FirebaseUser user, Uri file,
                             OnCompleteListener onCompleteListener,
                             OnFailureListener onFailureListener) {
