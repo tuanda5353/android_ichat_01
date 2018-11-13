@@ -17,6 +17,8 @@ public interface UserDataSouce {
 
         void getUser(FirebaseUser user, ValueEventListener valueEventListener);
 
+        void getUser(String id, ValueEventListener valueEventListener);
+
         void uploadImage(FirebaseUser user, Uri file,
                          OnCompleteListener onCompleteListener,
                          OnFailureListener onFailureListener);
